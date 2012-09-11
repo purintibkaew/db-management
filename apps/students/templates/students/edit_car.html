@@ -1,0 +1,104 @@
+﻿{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% endblock %}
+{% block span %}
+<script type="text/javascript">
+    $(document).ready(function (){
+        $("#name").hide();
+        $("#id_name").prop('disabled', true);
+        $("#phone_number").hide();
+        $("#id_phone_number").prop('disabled', true);
+        var select = $('#owner option').size();
+        if (select == 1){
+            $("#id_owner").prop('disabled', true);
+        }
+
+        $('#form :radio').click(function () {
+            var value = this.value;
+            if (value == 'new'){
+                $("#owner").hide();
+                $("#id_owner").prop('disabled', true);
+                $("#name").show();
+                $("#id_name").prop('disabled', false);
+                $("#phone_number").show();
+                $("#id_phone_number").prop('disabled', false);
+                if (select == 1){
+                    $("#id_owner").prop('disabled', true);
+                }
+            }
+            else {
+                $("#owner").show();
+                $("#id_owner").prop('disabled', false);
+                $("#name").hide();
+                $("#id_name").prop('disabled', true);
+                $("#phone_number").hide();
+                $("#id_phone_number").prop('disabled', true);
+                if (select == 1){
+                    $("#id_owner").prop('disabled', true);
+                }
+            }
+        });
+    });
+</script>
+{% if edit %}
+    <h2>{% trans "Edit car" %}:</h2>
+{% else %}
+    <h2>{% trans "Add new car" %}:</h2>
+{% endif %}
+<form id="form" method="post" action="{% url edit-crm %}" class="form-horizontal">
+    {{ form.id }}
+    {% csrf_token %}
+    <fieldset>
+        <div class="control-group">
+            <label class="control-label">{% trans 'Model' %}:</label>
+            <div class="controls ">
+                 {{ form.model }} {{ form.errors.model }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">{% trans 'Color' %}:</label>
+            <div class="controls">
+                 {{ form.color }} {{ form.errors.color }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">{% trans 'Number' %}:</label>
+            <div class="controls">
+                 {{ form.number }} {{ form.errors.number }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">{% trans 'Owner' %}:</label>
+            <div class="controls">
+                <label><input type="radio" name="answer" value="existing" checked>{% trans 'existent' %}
+                <input type="radio" name="answer" value="new">{% trans 'new' %}</label>
+            </div>
+        </div>
+        <div class="control-group" id="owner">
+            <div class="controls">
+                {{ form.owner }}
+                {{ form.errors.owner }}
+            </div>
+        </div>
+        <div class="control-group" id="name">
+            <label class="control-label">{% trans 'Name' %}: </label>
+            <div class="controls">
+                {{ form.name }}
+                {{ form.errors.name }}
+            </div>
+        </div>
+        <div class="control-group" id="phone_number">
+            <label class="control-label">{% trans 'Phone number' %}:</label>
+            <div class="controls">
+                {{ form.phone_number }} {{ form.errors.phone_number }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label"></label>
+            <div class="controls">
+                <button type="submit" class="btn btn-success">{% trans 'Save' %}</button>
+            </div>
+        </div>
+    </fieldset>
+ </form>
+{% endblock %}

@@ -1,0 +1,16 @@
+[
+    {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+                "username": "admin",
+                "first_name": "",
+                "last_name": "",
+                "email": "semargal@gmail.com",
+                "password": "sha1$ed2d0$c7a8ec094f2333405ac9c1c800cab38d3c9435a5",
+                "is_active": true,
+                "is_superuser": true,
+                "is_staff": true
+                }
+     }
+]

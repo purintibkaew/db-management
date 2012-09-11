@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% endblock %}
+
+{% block span %}
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('.work').click(function (){
+            $('.note').hide();
+            var id_note = '#note_' + this.id;
+            $(id_note).show();
+            return false;
+        });
+
+        $("#id_repair_date").datepicker({
+            changeYear: true,
+            firstDay: 1,
+            dateFormat: "dd.mm.yy"
+        });
+
+
+        {% if form.errors %}
+            $('#form').show();
+            $('#sh_form').hide();
+
+        {% else %}
+            $('#form').hide();
+            $('#sh_form').click(function(){
+                $(this).toggleClass('opened').toggleClass('closed').next().slideToggle();
+                if($(this).hasClass('opened')) {
+                    $(this).html('{% trans "Hide" %}');
+                }
+                else {
+                    $(this).html('{% trans "Add new visit" %}');
+                }
+            });
+        {% endif %}
+    });
+</script>
+
+{% if car %}
+ <div class="span5">
+    <a class="btn btn-primary" id="button_back" href="{% url index-crm %}"><i class="icon-arrow-left"></i>  {% trans 'Back to search' %}</a>
+    <table class="table" id="table_car">
+        <thead>
+            <tr>
+                <th><h3>{% trans "Car" %}</h3></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>{% trans 'Model' %}:</strong></td><td style="color: blue;"><strong>{{ car.model }}</strong></td>
+            </tr>
+            <tr>
+                <td><strong>{% trans 'Color' %}:</strong></td><td style="color: blue;"><strong>{{ car.color }}</strong></td>
+            </tr>
+            <tr>
+                <td><strong>{% trans 'Number' %}:</strong></td><td style="color: blue;"><strong>{{ car.number }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+ </div>
+
+<div class="span6">
+    <a class="btn btn-warning" id="button_edit" href='{% url edit-crm %}{{ car.id }}'>{% trans 'Edit' %}</a>
+    <table class="table" id="table_owner">
+        <thead>
+            <tr>
+                <th><h3>{% trans "Owner" %}</h3></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>{% trans "Name" %}:</strong></td><td style="color: blue;"><strong>{{ car.owner.name }}</strong></td>
+            </tr>
+            <tr>
+                <td><strong>{% trans "Phone number" %}:</strong></td><td style="color: blue;"><strong>{{ car.owner.phone_number }}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+ </div>
+
+{% else %}
+    <span class="label label-info">{% trans 'You have not added any cars yet' %}.</span>
+{% endif %}
+
+<div class="span12">
+{% if visits %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>{% trans "Date" %}</th>
+                <th>{% trans "Type of work" %}</th>
+                <th>{% trans "Price" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for visit in visits %}
+            <tr>
+                <td>{{ visit.repair_date|date:"d.m.Y" }}</td>
+                <td><a href="#" id="work_{{ visit.id }}" class="work">{{ visit.type_of_work }}</a></td>
+                <td>{{ visit.price }}</td>
+            </tr>
+            <tr id='note_work_{{ visit.id }}' class="note" style='display: none;'>
+                <th colspan="3"  width="600" style="font-weight: normal;">{% if visit.note %}{{ visit.note }}
+                {% else %}{% trans "No notes" %}{% endif %}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <span class="label label-info">{% trans "You have not added any visits yet" %}.</span>
+{% endif %}
+<br /><br /><br />
+    <button id="sh_form" class="btn btn-info btn-mini">{% trans 'Add new visit' %}</button>
+    <form id="form" method="post" action="{{ car.get_absolute_url }}" class="form-horizontal">
+        {% csrf_token %}
+        <fieldset>
+            <div class="control-group" style='display: none;'>
+                <label class="control-label">{% trans 'Car' %}:</label>
+                <div class="controls ">
+                     {{ form.car }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans 'Repair date' %}:</label>
+                <div class="controls ">
+                     {{ form.repair_date }} {{ form.errors.repair_date }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans 'Type of work' %}:</label>
+                <div class="controls ">
+                     {{ form.type_of_work }} {{ form.errors.type_of_work }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans 'Price' %}:</label>
+                <div class="controls ">
+                     {{ form.price }} {{ form.errors.price }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "Note" %}:</label>
+                <div class="controls ">
+                     {{ form.note }} {{ form.errors.note }}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls ">
+                     <td><button type="submit" class="btn btn-success">{% trans 'Add' %}</button>
+                </div>
+            </div>
+        </fieldset>
+     </form>
+    <ul class="pager">
+        {% if visits.has_previous %}
+        <li>
+            <a href="?page={{ visits.previous_page_number }}">&larr; {% trans "back" %}</a>
+        </li>
+        {% endif %}
+        <li> <a href="#">{% trans "page" %} {{ visits.number }} {% trans "of" %} {{ visits.paginator.num_pages }}</a></li>
+        {% if visits.has_next %}
+        <li>
+            <a href="?page={{ visits.next_page_number }}">{% trans "next" %} &rarr;</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+{% endblock %}
