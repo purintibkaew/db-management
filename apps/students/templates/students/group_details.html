@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+<table>
+   <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date of birth</th>
+            <th>Student ID</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in group.student_set.all %}
+        <tr>
+            <td>{{ student.name }}</td>
+            <td>{{ student.date }}</td>
+            <td>{{ student.student_ID }}</td>
+            <td><a href="{{ student.get_edit_url }}"><button>Edit</button></a></td>
+            <td><a href="{{ student.get_del_url }}"><button>Delete</button></a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td><a href="{% url student_add-students %}"><button>Add</button></a></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

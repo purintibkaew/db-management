@@ -1,5 +1,6 @@
-﻿{% extends 'base.html' %}
+{% extends 'base.html' %}
 {% block title %}{% endblock %}
+
 {% block content %}
 <table>
    <thead>
@@ -12,11 +13,16 @@
     <tbody>
         {% for group in group_list %}
         <tr>
-            <td>{{ group.name }}</td>
+            <td><a href="{{ group.get_absolute_url }}">{{ group.name }}</a></td>
             <td>{{ group.student_set.count }}</td>
             <td>{{ group.group_senior.name }}</td>
+            <td><a href="{{ group.get_edit_url }}"><button>Edit</button></a></td>
+            <td><a href="{{ group.get_del_url }}"><button>Delete</button></a></td>
         </tr>
         {% endfor %}
+        <tr>
+            <td><a href="{% url group_add-students %}"><button>Add</button></a></td>
+        </tr>
     </tbody>
 </table>
 {% endblock %}
