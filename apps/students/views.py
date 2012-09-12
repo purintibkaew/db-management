@@ -15,5 +15,3 @@ class GroupListView(ListView):
     def get_queryset(self):
     	groups = Group.objects.all()
         return groups
-
-

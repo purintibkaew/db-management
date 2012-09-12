@@ -12,5 +12,63 @@
                 "is_superuser": true,
                 "is_staff": true
                 }
+     },
+    {
+    "pk": 1,
+    "model": "students.student",
+    "fields": {
+                "name": "Maksim Severin",
+                "date": "1986-01-29",
+                "student_ID": "1986",
+                "group": "1"
+                }
+     },
+    {
+    "pk": 2,
+    "model": "students.student",
+    "fields": {
+                "name": "Stanislav Kulishov",
+                "date": "1985-03-01",
+                "student_ID": "19855",
+                "group": "2"
+                }
+     },
+    {
+    "pk": 3,
+    "model": "students.student",
+    "fields": {
+                "name": "Marina Shevchenko",
+                "date": "1985-07-05",
+                "student_ID": "12325",
+                "group": "2"
+                }
+     },
+    {
+    "pk": 4,
+    "model": "students.student",
+    "fields": {
+                "name": "Olexandr Sirko",
+                "date": "1986-09-22",
+                "student_ID": "5454",
+                "group": "1"
+                }
+     },
+    {
+    "pk": 1,
+    "model": "students.group",
+    "fields": {
+                "name": "RT-21",
+                "group_senior": "1"
+                }
+     },
+    {
+    "pk": 2,
+    "model": "students.group",
+    "fields": {
+                "name": "RT-31",
+                "group_senior": "3"
+                }
      }
 ]
+
+        
