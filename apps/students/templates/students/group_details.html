@@ -16,7 +16,12 @@
             <td>{{ student.date }}</td>
             <td>{{ student.student_ID }}</td>
             <td><a href="{{ student.get_edit_url }}"><button>Edit</button></a></td>
-            <td><a href="{{ student.get_del_url }}"><button>Delete</button></a></td>
+            <td>
+                <form method="post" action="{{ student.get_del_url }}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
         <tr>

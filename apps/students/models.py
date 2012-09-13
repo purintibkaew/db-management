@@ -6,7 +6,7 @@ class Student(models.Model):
     name = models.CharField(max_length=35)
     date = models.DateField()
     student_ID = models.IntegerField()
-    group = models.ForeignKey('Group', blank=True, null=True)
+    group = models.ForeignKey('Group')
 
     def __unicode__(self):
         return '%s' % (self.name)

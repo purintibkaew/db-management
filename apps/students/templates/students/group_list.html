@@ -17,7 +17,12 @@
             <td>{{ group.student_set.count }}</td>
             <td>{{ group.group_senior.name }}</td>
             <td><a href="{{ group.get_edit_url }}"><button>Edit</button></a></td>
-            <td><a href="{{ group.get_del_url }}"><button>Delete</button></a></td>
+            <td>
+                <form method="post" action="{{ group.get_del_url }}">
+                    {% csrf_token %}
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
         <tr>

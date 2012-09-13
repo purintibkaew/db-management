@@ -42,9 +42,9 @@ class EditGroupView(FormView):
         kwargs = super(EditGroupView, self).get_form_kwargs()
 
         if self.kwargs.get('pk', None):
-            self.group_id = self.kwargs.get('pk', None)
+            self.group_id = int(self.kwargs.get('pk')) -1
             kwargs.update(
-                {'initial': Group.objects.values()[int(self.group_id) - 1]})
+                {'initial': Group.objects.values()[self.group_id]})
             kwargs['initial']['group_senior'] = kwargs['initial']['group_senior_id']
 
         return kwargs
@@ -85,12 +85,16 @@ class EditStudentView(FormView):
 class DeleteStudent(DeleteView):
     model = Student
     success_url = '/groups/'
-    template_name = 'students/group_details.html'
-    template_name_suffix = None
+
+    def delete(self, request, *args, **kwargs):
+        super(DeleteStudent, self).delete(request, *args, **kwargs)
+        return redirect(self.object.group)
 
 
 class DeleteGroup(DeleteView):
     model = Group
     success_url = '/groups/'
-    template_name = "students/group_list.html"
-    template_name_suffix = None
+
+    def delete(self, request, *args, **kwargs):
+        super(DeleteGroup, self).delete(request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('group_list-students'))
