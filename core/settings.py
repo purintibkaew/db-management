@@ -113,6 +113,7 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'apps.students',
+    'apps.accounts',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

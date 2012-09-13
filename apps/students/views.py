@@ -9,9 +9,10 @@ from django.http import HttpResponseRedirect
 
 from apps.students.models import Group, Student
 from apps.students.forms import GroupForm, StudentForm
+from apps.accounts.views.mixinx import LoginRequiredMixin
 
 
-class GroupListView(ListView):
+class GroupListView(LoginRequiredMixin, ListView):
     context_object_name = "group_list"
     template_name = "students/group_list.html"
 
@@ -26,7 +27,7 @@ class GroupDetailsView(DetailView):
     template_name = 'students/group_details.html'
 
 
-class EditGroupView(FormView):
+class EditGroupView(LoginRequiredMixin, FormView):
     form_class = GroupForm
     template_name = "students/edit_group.html"
 
@@ -54,7 +55,7 @@ class EditGroupView(FormView):
         return HttpResponseRedirect(reverse('group_list-students'))
 
 
-class EditStudentView(FormView):
+class EditStudentView(LoginRequiredMixin, FormView):
     form_class = StudentForm
     template_name = "students/edit_student.html"
 
@@ -82,7 +83,7 @@ class EditStudentView(FormView):
         return redirect(student.group)
 
 
-class DeleteStudent(DeleteView):
+class DeleteStudent(LoginRequiredMixin, DeleteView):
     model = Student
     success_url = '/groups/'
 
@@ -91,7 +92,7 @@ class DeleteStudent(DeleteView):
         return redirect(self.object.group)
 
 
-class DeleteGroup(DeleteView):
+class DeleteGroup(LoginRequiredMixin, DeleteView):
     model = Group
     success_url = '/groups/'
 
