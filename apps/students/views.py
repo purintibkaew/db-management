@@ -43,9 +43,9 @@ class EditGroupView(LoginRequiredMixin, FormView):
         kwargs = super(EditGroupView, self).get_form_kwargs()
 
         if self.kwargs.get('pk', None):
-            self.group_id = int(self.kwargs.get('pk')) -1
+            self.group_id = int(self.kwargs.get('pk'))
             kwargs.update(
-                {'initial': Group.objects.values()[self.group_id]})
+                {'initial': Group.objects.filter(id=self.group_id).values()[0]})
             kwargs['initial']['group_senior'] = kwargs['initial']['group_senior_id']
 
         return kwargs
@@ -73,7 +73,7 @@ class EditStudentView(LoginRequiredMixin, FormView):
         if self.kwargs.get('pk', None):
             self.student_id = self.kwargs.get('pk', None)
             kwargs.update(
-                {'initial': Student.objects.values()[int(self.student_id) - 1]})
+                {'initial': Student.objects.filter(id=self.student_id).values()[0]})
             kwargs['initial']['group'] = kwargs['initial']['group_id']
 
         return kwargs
@@ -85,17 +85,17 @@ class EditStudentView(LoginRequiredMixin, FormView):
 
 class DeleteStudent(LoginRequiredMixin, DeleteView):
     model = Student
-    success_url = '/groups/'
 
     def delete(self, request, *args, **kwargs):
-        super(DeleteStudent, self).delete(request, *args, **kwargs)
+        self.object = self.get_object()
+        self.object.delete()
         return redirect(self.object.group)
 
 
 class DeleteGroup(LoginRequiredMixin, DeleteView):
     model = Group
-    success_url = '/groups/'
 
     def delete(self, request, *args, **kwargs):
-        super(DeleteGroup, self).delete(request, *args, **kwargs)
+        self.object = self.get_object()
+        self.object.delete()
         return HttpResponseRedirect(reverse('group_list-students'))
