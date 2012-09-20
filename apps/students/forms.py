@@ -9,19 +9,25 @@ class StudentForm(forms.ModelForm):
 
     class Meta:
         model = Student
+        exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        self.student_id = None
+        self.user = kwargs.pop('user')
         super(StudentForm, self).__init__(*args, **kwargs)
-
-        if 'data' in kwargs:
-            if 'id' in kwargs['data']:
-                self.student_id = kwargs['data']['id']
+        queryset = Group.objects.filter(user=self.user)
+        empty_label = 'You have not selected the group'
+        if len(queryset) == 0:
+            empty_label = 'The list is empty'
+        self.fields['group'] = forms.ModelChoiceField(empty_label=empty_label,
+                                                      queryset=queryset,
+                                                      required=False)
 
     def save(self, *args, **kwargs):
         student = super(StudentForm, self).save(commit=False)
-        if self.student_id:
-            student.id = self.student_id
+        id = self.cleaned_data.get('id')
+        student.user = self.user
+        if id:
+            student.id = id
         student = super(StudentForm, self).save()
         return student
 
@@ -31,18 +37,23 @@ class GroupForm(forms.ModelForm):
 
     class Meta:
         model = Group
+        exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        self.car_id = None
+        self.user = kwargs.pop('user')
         super(GroupForm, self).__init__(*args, **kwargs)
-
-        if 'data' in kwargs:
-            if 'id' in kwargs['data']:
-                self.group_id = kwargs['data']['id']
+        queryset = Student.objects.filter(user=self.user)
+        empty_label = 'You have not selected a student'
+        if len(queryset) == 0:
+            empty_label = 'The list is empty'
+        self.fields['student'] = forms.ModelChoiceField(
+            empty_label=empty_label, queryset=queryset, required=False)
 
     def save(self, *args, **kwargs):
         group = super(GroupForm, self).save(commit=False)
-        if self.group_id:
-            group.id = self.group_id
+        id = self.cleaned_data.get('id')
+        group.user = self.user
+        if id:
+            group.id = id
         group = super(GroupForm, self).save()
         return group

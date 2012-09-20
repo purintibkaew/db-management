@@ -17,6 +17,7 @@
     "pk": 1,
     "model": "students.student",
     "fields": {
+                "user": "1",
                 "name": "Maksim Severin",
                 "date": "1986-01-29",
                 "student_ID": "1986",
@@ -27,6 +28,7 @@
     "pk": 2,
     "model": "students.student",
     "fields": {
+                "user": "1",
                 "name": "Stanislav Kulishov",
                 "date": "1985-03-01",
                 "student_ID": "19855",
@@ -37,6 +39,7 @@
     "pk": 3,
     "model": "students.student",
     "fields": {
+                "user": "1",
                 "name": "Marina Shevchenko",
                 "date": "1985-07-05",
                 "student_ID": "12325",
@@ -47,6 +50,7 @@
     "pk": 4,
     "model": "students.student",
     "fields": {
+                "user": "1",
                 "name": "Olexandr Sirko",
                 "date": "1986-09-22",
                 "student_ID": "5454",
@@ -57,6 +61,7 @@
     "pk": 1,
     "model": "students.group",
     "fields": {
+                "user": "1",
                 "name": "RT-21",
                 "group_senior": "1"
                 }
@@ -65,6 +70,7 @@
     "pk": 2,
     "model": "students.group",
     "fields": {
+                "user": "1",
                 "name": "RT-31",
                 "group_senior": "3"
                 }

@@ -1,8 +1,10 @@
 #-*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Student(models.Model):
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=35)
     date = models.DateField()
     student_ID = models.IntegerField()
@@ -21,8 +23,10 @@ class Student(models.Model):
 
 
 class Group(models.Model):
+    user = models.ForeignKey(User)
     name = models.CharField(max_length=35)
-    group_senior = models.ForeignKey(Student, related_name='+', blank=True, null=True)
+    group_senior = models.ForeignKey(Student, related_name='+',
+                                     blank=True, null=True)
 
     def __unicode__(self):
         return '%s' % (self.name)
