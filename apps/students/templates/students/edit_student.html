@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{% endblock %}
 {% block content %}
-<form method="post" action="{% url student_add-students %}">
+<form method="post" action="{% url "student_add-students" %}">
     {% csrf_token %}
     <table>
         {{ form.as_table }}

@@ -4,22 +4,14 @@
 {% if err_log %}
 <li style="color: red;">{{ err_log }}</li>
 {% endif %}
-<form method="post" action="{% url login-accounts %}">
+<form method="post" action="{% url "login" %}">
     {% csrf_token %}
     <table>
     <thead>
     </thead>
     <tbody>
         <tr>
-            <td></td>
-            <td><input type="radio" name="status" value="existing" checked>I'm registered already</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="radio" name="status" value="new">I don't have an account yet</td>
-        </tr>
-        <tr>
-            <td>Login:</td>
+            <td>Login or email:</td>
             <td>{{ form.username }}</td><td>{{ form.errors.username }}</td>
         </tr>
         <tr>
