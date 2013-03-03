@@ -40,7 +40,7 @@ class RequestStat(object):
 
     def render_sql_stat_block(self):
         statrows = (
-            (_('Total request time'), '%0.3f msec' % self.total_time),
+            (_('Total request time'), '%0.3f ms' % self.total_time),
             (_('Sql queries count'), len(connection.queries)),
         )
 

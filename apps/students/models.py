@@ -9,15 +9,15 @@ class Student(models.Model):
     group = models.ForeignKey('Group')
 
     def __unicode__(self):
-        return '%s' % (self.name)
+        return '%s' % self.name
 
     @models.permalink
     def get_edit_url(self):
-        return ('student_edit-students', [str(self.id)])
+        return 'student_edit-students', [str(self.id)]
 
     @models.permalink
     def get_del_url(self):
-        return ('delete_student-students', [str(self.id)])
+        return 'delete_student-students', [str(self.id)]
 
 
 class Group(models.Model):
@@ -25,16 +25,16 @@ class Group(models.Model):
     group_senior = models.ForeignKey(Student, related_name='+', blank=True, null=True)
 
     def __unicode__(self):
-        return '%s' % (self.name)
+        return '%s' % self.name
 
     @models.permalink
     def get_absolute_url(self):
-        return ('group_details-students', [str(self.id)])
+        return 'group_details-students', [str(self.id)]
 
     @models.permalink
     def get_edit_url(self):
-        return ('group_edit-students', [str(self.id)])
+        return 'group_edit-students', [str(self.id)]
 
     @models.permalink
     def get_del_url(self):
-        return ('delete_group-students', [str(self.id)])
+        return 'delete_group-students', [str(self.id)]
