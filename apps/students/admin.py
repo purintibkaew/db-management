@@ -3,13 +3,14 @@
 from apps.students.models import Student, Group
 
 
-class StudentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+class StudentInline(admin.TabularInline):
+    model = Student
 
 
 class GroupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name')
+    inlines = [
+        StudentInline,
+    ]
 
 
-admin.site.register(Student, StudentAdmin)
 admin.site.register(Group, GroupAdmin)

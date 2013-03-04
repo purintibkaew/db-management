@@ -15,28 +15,13 @@ class LoginView(FormView):
 
     def form_valid(self, form):
         kwargs = self.get_form_kwargs()
+
         username = kwargs['data']['username']
+        # email = kwargs['data'].pop('email', None)
         password = kwargs['data']['password']
-        status = kwargs['data']['status']
 
-        try:
-            user = User.objects.get(username=username)
-        except User.DoesNotExist:
-            if status == 'new':
-                user = User.objects.create_user(username=username,
-                                                password=password)
-                status = 'existing'
-            else:
-                err_log = _('User not found')
-                return self.render_to_response(
-                    self.get_context_data(form=form, err_log=err_log))
-
-        if status == 'new':
-            err_log = _('This login is already in use')
-            return self.render_to_response(
-                self.get_context_data(form=form, err_log=err_log))
-
-        user = authenticate(username=username, password=password)
+        user = authenticate(
+            username=username, email=username, password=password)
         if user is not None:
             if user.is_active:
                 login(self.request, user)

@@ -46,7 +46,13 @@ class EditGroupView(LoginRequiredMixin, UpdateView):
         Returns the keyword arguments for instanciating the form.
         """
         kwargs = super(EditGroupView, self).get_form_kwargs()
-        kwargs.update({'user': self.request.user})
+
+        if self.kwargs.get('pk', None):
+            self.group_id = int(self.kwargs.get('pk'))
+            kwargs.update(
+                {'initial': Group.objects.filter(id=self.group_id).values()[0]})
+            kwargs['initial']['group_senior'] = kwargs['initial']['group_senior_id']
+
         return kwargs
 
     def form_valid(self, form):
@@ -73,7 +79,13 @@ class EditStudentView(LoginRequiredMixin, UpdateView):
         Returns the keyword arguments for instanciating the form.
         """
         kwargs = super(EditStudentView, self).get_form_kwargs()
-        kwargs.update({'user': self.request.user})
+
+        if self.kwargs.get('pk', None):
+            self.student_id = self.kwargs.get('pk', None)
+            kwargs.update(
+                {'initial': Student.objects.filter(id=self.student_id).values()[0]})
+            kwargs['initial']['group'] = kwargs['initial']['group_id']
+
         return kwargs
 
     def form_valid(self, form):
@@ -84,22 +96,16 @@ class EditStudentView(LoginRequiredMixin, UpdateView):
 class DeleteStudent(LoginRequiredMixin, DeleteView):
     model = Student
 
-    def get_queryset(self):
-        return super(DeleteGroup, self).get_queryset().filter(
-            user=self.request.user)
-
     def delete(self, request, *args, **kwargs):
-        super(DeleteStudent, self).delete(request, *args, **kwargs)
+        self.object = self.get_object()
+        self.object.delete()
         return redirect(self.object.group)
 
 
 class DeleteGroup(LoginRequiredMixin, DeleteView):
     model = Group
 
-    def get_queryset(self):
-        return super(DeleteGroup, self).get_queryset().filter(
-            user=self.request.user)
-
     def delete(self, request, *args, **kwargs):
-        super(DeleteGroup, self).delete(request, *args, **kwargs)
+        self.object = self.get_object()
+        self.object.delete()
         return HttpResponseRedirect(reverse('group_list-students'))

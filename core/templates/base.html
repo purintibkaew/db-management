@@ -8,13 +8,17 @@
 </head>
 <body>
 {% if user.is_authenticated %}
-    <a href="{% url logout-accounts %}">Log out</a>
+    <a href="{% url "logout" %}">Log out</a>
 {% endif %}
 
 {% block content %}
 
 
 {% endblock %}
-{{ time }}
+
+{% for row in statrows %}
+  {{ row }}
+{% endfor %}
+
 </body>
 </html>
