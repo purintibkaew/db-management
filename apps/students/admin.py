@@ -1,6 +1,6 @@
 ﻿from django.contrib import admin
 
-from apps.students.models import Student, Group
+from apps.students.models import Student, Group, ModelChangeLog
 
 
 class StudentInline(admin.TabularInline):
@@ -14,3 +14,4 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Group, GroupAdmin)
+admin.site.register(ModelChangeLog)

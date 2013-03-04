@@ -12,7 +12,7 @@ class StudentForm(forms.ModelForm):
         exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
+        self.user = kwargs.pop('user', None)
         super(StudentForm, self).__init__(*args, **kwargs)
         queryset = Group.objects.filter(user=self.user)
         empty_label = 'You have not selected the group'
@@ -40,7 +40,7 @@ class GroupForm(forms.ModelForm):
         exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user')
+        self.user = kwargs.pop('user', None)
         super(GroupForm, self).__init__(*args, **kwargs)
         queryset = Student.objects.filter(user=self.user)
         empty_label = 'You have not selected a student'

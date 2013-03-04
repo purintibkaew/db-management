@@ -46,6 +46,7 @@ class EditGroupView(LoginRequiredMixin, UpdateView):
         Returns the keyword arguments for instanciating the form.
         """
         kwargs = super(EditGroupView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
 
         if self.kwargs.get('pk', None):
             self.group_id = int(self.kwargs.get('pk'))
@@ -79,6 +80,7 @@ class EditStudentView(LoginRequiredMixin, UpdateView):
         Returns the keyword arguments for instanciating the form.
         """
         kwargs = super(EditStudentView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
 
         if self.kwargs.get('pk', None):
             self.student_id = self.kwargs.get('pk', None)

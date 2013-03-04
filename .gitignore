@@ -1,4 +1,5 @@
 .idea/
+.codeintel/
 *.py[co]
 *.db
 .env/
