@@ -1,12 +1,11 @@
 #-*- coding: utf-8 -*-
 from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from apps.accounts.forms import LoginForm
+from accounts.forms import LoginForm
 
 
 class LoginView(FormView):
@@ -17,7 +16,6 @@ class LoginView(FormView):
         kwargs = self.get_form_kwargs()
 
         username = kwargs['data']['username']
-        # email = kwargs['data'].pop('email', None)
         password = kwargs['data']['password']
 
         user = authenticate(

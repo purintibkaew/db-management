@@ -1,6 +1,6 @@
 ﻿from django.contrib import admin
 
-from apps.students.models import Student, Group, ModelChangeLog
+from students.models import Student, Group, ModelChangeLog
 
 
 class StudentInline(admin.TabularInline):

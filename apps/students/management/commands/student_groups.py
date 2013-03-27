@@ -1,6 +1,6 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
-from apps.students.models import Student, Group
+from students.models import Group
 
 
 class Command(BaseCommand):

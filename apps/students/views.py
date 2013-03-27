@@ -1,15 +1,12 @@
 #-*- coding: utf-8 -*-
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView
-from django.views.generic.edit import FormView
-from django.db.models import Q
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 
-from apps.students.models import Group, Student
-from apps.students.forms import GroupForm, StudentForm
-from apps.accounts.views.mixinx import LoginRequiredMixin
+from students.models import Group, Student
+from students.forms import GroupForm, StudentForm
+from accounts.views.mixinx import LoginRequiredMixin
 
 
 class GroupListView(LoginRequiredMixin, ListView):
@@ -17,7 +14,7 @@ class GroupListView(LoginRequiredMixin, ListView):
     template_name = "students/group_list.html"
 
     def get_queryset(self):
-    	groups = Group.objects.filter(user=self.request.user)
+        groups = Group.objects.filter(user=self.request.user)
         return groups
 
 

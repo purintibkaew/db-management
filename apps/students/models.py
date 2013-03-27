@@ -75,6 +75,7 @@ def post_save_handler(sender, created, instance, **kwargs):
     ModelChangeLog.objects.create(
         content_object=instance, object_id=instance.id, action=action)
 
+
 @receiver(post_delete, sender=Student)
 @receiver(post_delete, sender=Group)
 def post_delete_handler(sender, instance, **kwargs):

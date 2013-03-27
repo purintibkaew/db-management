@@ -1,9 +1,15 @@
 # Django settings for db_management project.
-from os import path
+import os
+import sys
 
+
+PROJECT_PATH = os.path.abspath(os.path.join(os.path.split(__file__)[0], os.pardir))
+
+# Add the apps directory to the PYTHONPATH
+sys.path.append(os.path.join(PROJECT_PATH, 'apps'))
 
 def rel(x):
-    return path.join(path.abspath(path.dirname(__file__)), x)
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), x)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -93,7 +99,7 @@ TEMPLATE_LOADERS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'apps.accounts.backends.EmailBackend',
+    'accounts.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -105,7 +111,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.students.middleware.RequestStat',
+    'students.middleware.RequestStat',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -116,7 +122,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "apps.students.context_processors.settings"
+    "students.context_processors.settings"
 )
 
 ROOT_URLCONF = 'core.urls'
@@ -129,8 +135,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'apps.students',
-    'apps.accounts',
+    'students',
+    'accounts',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

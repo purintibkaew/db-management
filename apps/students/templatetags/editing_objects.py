@@ -17,7 +17,8 @@ def edit_admin_link_for(parser, token):
         # split_contents() knows not to split quoted strings.
         tag_name, obj = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError("%r tag requires a single argument" % token.contents.split()[0])
+        raise template.TemplateSyntaxError(
+            "%r tag requires a single argument" % token.contents.split()[0])
 
     return EditObjectNode(obj)
 
